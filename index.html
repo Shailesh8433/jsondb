@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        Practice
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script src="css/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1> Vertical basic form </h1>
+        <form id="empForm" method="post">
+            <div class="form-group">
+                <span><label for="empid">Employee ID:</label> <label id="empidMsg">
+                    </label></span>
+                <input type="text" class="form-control" name="empid" id="empid" placeholder="Enter Employee iD">
+            </div>
+            <div class="form-group">
+                <label for="empname">Employee Name:</label>
+                <input type="text" class="form-control" id="empname" placeholder="Enter Employee Name" name="empname">
+            </div>
+            <div class="form-group">
+                <label for="empemail">Email:</label>
+                <input type="email" class="form-control" id="empemail" placeholder="Enter Employee Email"
+                    name="empemail">
+            </div>
+            <div class="form-group">
+                <label for="empmob">Mobile:</label>
+                <input type="number" class="form-control" id="empmob" placeholder="Enter Employee Mob"
+                    name="empmob">
+            </div>
+            <div class="form-group">
+                <label for="empadd">Email:</label>
+                <input type="text" class="form-control" id="empadd" placeholder="Enter Employee Address"
+                    name="empadd">
+            </div>
+            <input type="button" class="btn btn-outline-danger" id="empSave" value="Save" onclick="saveEmployee();">
+        </form>
+    </div>
+    <script>
+
+        function validateAndGetFormData() {
+            var empidVar = $("#empid").val();
+            if (empidVar === "") {
+                alert("Employee ID Required Value");
+                $("#empid").focus();
+                return "";
+            }
+            var empnameVar = $("#empname").val();
+            if (empnameVar === "") {
+                alert("Employee Name is Required Value");
+                $("#empname").focus();
+                return "";
+            }
+            var empemailVar = $("#empemail").val();
+            if (empemailVar === "") {
+                alert("Employee Email is Required Value");
+                $("#empemail").focus();
+                return "";
+            }
+            var empmobVar = $("#empmob").val();
+            if (empmobVar === "") {
+                alert("Employee mobis Required Value");
+                $("#emp mob").focus();
+                return "";
+            }
+            var empaddVar = $("#empadd").val();
+            if (empaddVar === "") {
+                alert("Employee Add is Required Value");
+                $("#empadd").focus();
+                return "";
+            }
+            var jsonStrObj = {
+                empid: empidVar,
+                empname: empnameVar,
+                empemail: empemailVar,
+                empmob: empmobVar,
+                empadd: empaddVar,
+            };
+            return JSON.stringify(jsonStrObj);
+        }
+
+    
+
+
+        function resetForm() {
+            $("#empid").val("")
+            $("#empname").val("");
+            $("#empemail").val("");
+            $("#empmob").val("");
+            $("#empadd").val("");
+            $("#empid").focus();
+        }
+
+
+        function saveEmployee() {
+            var jsonStr = validateAndGetFormData();
+            if (jsonStr === "") {
+                return;
+            }
+            var putReqStr = createPUTRequest("90935766|-31948838173295190|90934599",
+                jsonStr, "SAMPLE", "EMP-REL");
+            alert(putReqStr);
+            jQuery.ajaxSetup({ async: false });
+            var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
+                "http://api.login2explore.com:5577", "/api/iml");
+            alert(JSON.stringify(resultObj));
+            jQuery.ajaxSetup({ async: true });
+            resetForm();
+        }
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+</body>
+
+</html>
